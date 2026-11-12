@@ -1,68 +1,78 @@
-# SHAKIL STORE
+# SHAKIL STORE — Next.js + Supabase
 
-Premium, minimal, mobile-first Bangladesh ecommerce storefront (Bangla + English).
+Premium, mobile-first Bangladesh ecommerce storefront. Original SHAKIL STORE identity with clean neutral surfaces and warm orange accents. Inspired by familiar ecommerce usability patterns; no copied Cellbun assets or copy.
 
-## Product direction
+## Stack
 
-Use the general ecommerce UX patterns of a premium Bangladesh store: clear category navigation, searchable product catalogue, product details with verified ratings/reviews, cart, account-required checkout, order tracking, and a role-protected admin dashboard. The visual identity remains original to SHAKIL STORE (warm orange accent, clean neutral surfaces, Bricolage Grotesque + DM Sans).
+- Next.js App Router, React, TypeScript
+- Tailwind CSS
+- Supabase Auth, PostgreSQL, Row Level Security and Storage
+- Render Node.js web service
 
-## Current repository state
+## Supabase project
 
-- `index.html` is still the original static storefront preview.
-- It currently uses demo products and browser-local cart/wishlist state.
-- The current Render deployment is a static preview, not a production checkout.
-- Do not collect real customer/payment data on the preview.
+- Project: `shakil-store`
+- Ref: `ehqjzirfzbuyevqcecnm`
+- Region: `ap-southeast-1`
+- URL: `https://ehqjzirfzbuyevqcecnm.supabase.co`
 
-## Supabase backend provisioned
+## Local setup
 
-Project:
-- Name: `shakil-store`
-- Project ref: `ehqjzirfzbuyevqcecnm`
-- Region: `ap-southeast-1` (Singapore)
-- API URL: `https://ehqjzirfzbuyevqcecnm.supabase.co`
+1. Install Node.js 20 or later.
+2. Copy `.env.example` to `.env.local`.
+3. Set the Supabase URL and publishable key.
+4. Run `npm install`.
+5. Run `npm run dev`.
+6. Visit `http://localhost:3000`.
 
-Database foundation is created directly in the hosted project:
-- 20 public tables for profiles, admins, catalogue, product images, addresses, carts, orders, order items, order status history, payments, deliveries, stock reservations, coupons, coupon redemptions, reviews, wishlists, banners and public settings.
-- RLS is enabled on every public table.
-- Admin authorization uses a protected `admins` table and a private-schema authorization helper.
-- Public product reads are restricted to published products; private order/customer data is owner-scoped.
-- Product image Storage bucket: `product-images` (public read, admin-only writes).
-- Order placement is represented by a server-safe database transaction function. It recalculates prices from the live catalogue, checks available stock, creates order/payment records, reserves stock and consumes a coupon atomically.
-- Manual bKash/Nagad transaction references remain `pending_verification`; only an admin can mark them paid.
-- Verified-purchase reviews are limited to delivered orders and remain unapproved until moderation.
-
-Security Advisor was checked after setup and returned no findings.
-
-## Required application environment
-
-Use these names in the hosting provider's environment settings (never commit actual secrets):
+## Environment
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://ehqjzirfzbuyevqcecnm.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<Supabase publishable key>
-SUPABASE_SERVICE_ROLE_KEY=<server-only secret; never NEXT_PUBLIC_>
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<publishable-key>
+# Optional server-only secret; never commit it and never prefix it NEXT_PUBLIC_.
+SUPABASE_SERVICE_ROLE_KEY=
 ```
 
-The publishable key is safe for a browser only when paired with RLS. The service-role key must stay server-side and must never be added to browser code or Git.
+The publishable key is intended for browser use with RLS. Never expose the service-role key or payment credentials to the client or Git.
 
-## Still required before accepting real orders
+## Implemented foundation
 
-1. Replace the static preview with a Next.js application and server-side routes/actions.
-2. Configure email/password Auth, email confirmation and a custom SMTP provider for reliable production mail.
-3. Configure an SMS provider before enabling phone OTP. Phone-number/password login needs extra account-recovery safeguards because phone numbers can be recycled.
-4. Create the owner's customer account, then grant the admin role to that exact Auth user ID through a controlled one-time setup.
-5. Set actual delivery charges and public store settings before checkout can place orders.
-6. Configure the bKash/Nagad merchant details and test manual transaction verification; never auto-mark manual payments as paid.
-7. Add an approved merchant payment API only if automatic payment collection is later required.
-8. Configure courier account access and test manual booking/tracking before any courier API integration.
-9. Add real products, stock and images; do not publish placeholder ratings or fabricated reviews.
-10. Test auth, RLS, checkout, stock race conditions, cancellation/returns, payment verification, admin access and mobile UX before production launch.
-11. Connect the production domain, SMTP, privacy/terms/returns/shipping policies, SEO metadata, sitemap and monitoring.
+- Database: 20 public tables covering profiles, admins, categories, products, product images, addresses, carts, cart items, orders, order items, order status history, payments, deliveries, stock reservations, coupons, coupon redemptions, reviews, wishlists, banners and website settings.
+- RLS enabled on all public tables; customer rows are scoped to their account and admin authorization is checked against the protected `admins` table.
+- Product image Storage bucket with public read and admin-only write.
+- Account sign-up/sign-in for email/password and phone OTP UI (SMS provider still needs configuration).
+- Live published product/category listing, search, product details, multiple image gallery, specifications, ratings, reviews and related products.
+- Cart persistence for signed-in users and server-side order creation via a database transaction.
+- Server-calculated prices, coupon discount, delivery charge, stock reservations, unique order ID and scheduled expiry for abandoned reservations.
+- Account order list, manual bKash/Nagad transaction submission, COD, order tracking by order ID + registered phone.
+- Admin dashboard for products, multiple image uploads, stock, categories, orders, statuses, manual payment verification, courier tracking, reviews, coupons, banners, customer profiles and delivery charge settings.
+- FAQ, store policies, SEO metadata, sitemap, robots and 404 page.
 
-## Security notes
+## Important setup before production
 
-- Never expose Supabase service-role/secret keys or payment credentials in client code.
-- Do not trust client-submitted prices, totals, stock or payment status.
-- All order totals must be recomputed from database prices on the server.
-- Manual payment transactions must remain pending until verified by an authorized admin.
-- Admin status must never be derived from user-editable profile metadata.
+1. Configure Auth email confirmation and production SMTP in Supabase.
+2. Configure an SMS provider for phone OTP; provider message costs may apply.
+3. Register the owner account with verified email, then grant that account the `admin` role in `public.admins` through a trusted database session. Do not expose admin insertion to customers.
+4. Set a real default delivery charge from `/admin` before checkout is enabled.
+5. Add genuine products, categories, prices, stock and product photos.
+6. Confirm the displayed manual payment number and payment network. Manual mobile payments remain pending until an admin verifies the transaction ID.
+7. Use authorized bKash/Nagad merchant credentials and server-side callbacks only if automatic payments are later enabled.
+8. Test order status transitions, stock concurrency, expiry, cancellation/returns, review eligibility, RLS and admin authorization.
+9. Configure official courier API credentials only when accounts and integration access are available.
+10. Connect a custom domain, SMTP, legal policies, analytics, monitoring and backups.
+
+## Deployment on Render
+
+Create a Node.js Web Service from this repository's `main` branch:
+- Build command: `npm install && npm run build`
+- Start command: `npm start`
+- Region: Singapore
+- Plan: Free for initial preview (may sleep when idle)
+- Environment: add the two `NEXT_PUBLIC_SUPABASE_*` values using Render's environment settings.
+
+The existing Render Static Site serves the old HTML preview. It does not run Next.js. The new Node Web Service must be created and tested before replacing the old public URL.
+
+## Current launch status
+
+This is a substantial connected application foundation, but not yet production-ready until the Render Node service is deployed, the first admin account is authorized, real products and delivery charges are configured, email/SMS providers are set, and the end-to-end checkout is tested. Do not accept real orders on an unverified deployment.
