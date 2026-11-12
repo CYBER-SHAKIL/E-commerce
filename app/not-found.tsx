@@ -1,0 +1,1 @@
+import Link from "next/link";export default function NotFound(){return <main className="wrap" style={{padding:60,textAlign:"center"}}><h1>404 · Page not found</h1><p className="muted">এই পৃষ্ঠাটি পাওয়া যায়নি।</p><Link className="primary" href="/">Back to Store</Link></main>}
