@@ -10,7 +10,7 @@ export default function StoreChrome({cartCount=0,onCart}:{cartCount?:number;onCa
  useEffect(()=>{createClient().from("categories").select("id,name,slug").eq("is_active",true).order("sort_order").then(({data})=>setCats((data||[]).filter(c=>["gadgets","fashion","accessories"].includes(String(c.slug||c.name).toLowerCase().replace(/\s+/g,"-")))))},[]);
  const go=(href:string)=>{setOpen(false);router.push(href)};
  return <>
- <div className="topline">WELCOME TO <b>SHAKIL STORE</b> · Smart Shopping · সারা বাংলাদেশে হোম ডেলিভারি</div>
+ <div className="topline">WELCOME TO <b>SHAKIL STORE</b> · Smart Shopping, সারা বাংলাদেশে হোম ডেলিভারি</div>
  <header className="header"><div className="wrap headrow">
  <button type="button" className={"menu-toggle "+(open?"is-open":"")} aria-label={open?"Close menu":"Open categories"} aria-expanded={open} onClick={()=>setOpen(v=>!v)}><span></span><span></span><span></span></button>
  <Link className="logo" href="/">SHAKIL <span>STORE</span></Link>
