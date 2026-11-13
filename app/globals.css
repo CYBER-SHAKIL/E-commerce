@@ -119,3 +119,34 @@
 .whatsapp-icon path:first-child{fill:none}
 .whatsapp-icon path:last-child{fill:none}
 @media(max-width:620px){.header .logo{color:#fff}.auth-headrow .mobile-head-actions{display:flex}.auth-headrow .mobile-head-actions svg{stroke:#fff}.mobile-bottom-nav a:nth-child(3) svg{stroke:#555}.mobile-bottom-nav a:nth-child(4) svg{stroke:#20b866}}
+
+/* Final unified header: black welcome strip + white navigation row on every route */
+.topline{position:sticky!important;top:0!important;z-index:120!important;height:auto!important;min-height:32px;background:#202226!important;color:#fff!important;padding:8px 6px!important;font-size:10px!important}
+.header{position:sticky!important;top:32px!important;z-index:110!important;background:#fff!important;color:#17191d!important;border-bottom:1px solid #e6e8ec!important;box-shadow:0 3px 12px #11110a08!important}
+.header .logo,.header .navlinks a,.header .headbtn,.header .header-icon{color:#17191d!important}
+.header .headbtn{background:#fff!important;border-color:#e6e8ec!important}
+.header .menu-toggle{color:#17191d!important;background:transparent!important}
+.header .mobile-head-actions button,.header .mobile-head-actions a{color:#17191d!important}
+.header .search input{background:#f7f8fa!important;color:#17191d!important}
+.header .primary{color:#fff!important}
+.category-menu-backdrop{z-index:105!important;top:90px!important;bottom:0!important;animation:menuFade .18s ease}
+.category-menu{animation:menuSlide .3s cubic-bezier(.22,.8,.25,1)!important}
+.category-menu-item{transition:background .2s ease,color .2s ease,padding-left .2s ease}
+.category-menu-item:hover,.category-menu-item:focus-visible{background:#fff5ef;padding-left:12px;color:var(--brand)}
+.password-toggle{color:#626a73!important}
+.password-toggle svg{width:23px!important;height:23px!important;stroke-width:2!important}
+.password-wrap>input{padding-right:56px!important}
+.mobile-bottom-nav a{transition:color .18s ease,transform .18s ease}
+.mobile-bottom-nav a:active{transform:translateY(-2px)}
+@media(max-width:620px){
+ .topline{height:32px!important;min-height:32px!important;padding:8px 3px!important;font-size:9px!important}
+ .header{top:32px!important;background:#fff!important}
+ .headrow{height:58px!important}
+ .headrow>.logo{color:#17191d!important}
+ .menu-toggle{color:#17191d!important}
+ .mobile-head-actions button,.mobile-head-actions a{color:#17191d!important}
+ .auth-headrow .mobile-head-actions{display:flex!important}
+ .auth-headrow .mobile-head-actions svg{stroke:#17191d!important}
+ .category-menu-backdrop{top:90px!important}
+ .auth-page{padding-top:0}
+}
