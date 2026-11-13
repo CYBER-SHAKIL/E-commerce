@@ -109,3 +109,13 @@
  .auth-card{margin:30px auto 95px}
  .forgot-row{justify-content:flex-start!important}
 }
+
+.mobile-head-actions svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mobile-bottom-nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.mobile-bottom-nav a:nth-child(3){color:#555!important}
+.mobile-bottom-nav a:nth-child(4){color:#20b866!important}
+.mobile-bottom-nav a:nth-child(4) small{color:#555!important}
+.whatsapp-icon{fill:none!important;stroke:#20b866!important;stroke-width:1.8!important;stroke-linecap:round;stroke-linejoin:round}
+.whatsapp-icon path:first-child{fill:none}
+.whatsapp-icon path:last-child{fill:none}
+@media(max-width:620px){.header .logo{color:#fff}.auth-headrow .mobile-head-actions{display:flex}.auth-headrow .mobile-head-actions svg{stroke:#fff}.mobile-bottom-nav a:nth-child(3) svg{stroke:#555}.mobile-bottom-nav a:nth-child(4) svg{stroke:#20b866}}
