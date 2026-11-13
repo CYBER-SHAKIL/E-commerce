@@ -200,3 +200,52 @@ body{padding-bottom:82px}
  .mobile-bottom-nav a:hover{color:#e87532}
  .mobile-search-panel{top:90px}
 }
+
+/* Unified premium chrome refinements */
+.header{background:#fff!important;color:#17191d!important}
+.header .logo,.header .navlinks a,.header .headbtn,.header .mobile-head-actions button{color:#17191d!important}
+.header .menu-toggle{color:#17191d!important}
+.menu-toggle{width:38px!important;height:38px!important;display:grid!important;gap:5px!important;align-content:center!important;justify-items:center!important}
+.menu-toggle span{display:block!important;width:25px!important;height:2px!important;background:#25272b!important;border-radius:3px!important;transition:transform .3s ease,opacity .2s ease!important}
+.menu-toggle.is-open span:first-child{transform:translateY(7px) rotate(45deg)!important}
+.menu-toggle.is-open span:nth-child(2){opacity:0!important}
+.menu-toggle.is-open span:last-child{transform:translateY(-7px) rotate(-45deg)!important}
+.category-menu-backdrop{inset:90px 0 76px!important;z-index:125!important;animation:menuFade .2s ease}
+.category-menu{width:290px!important;max-width:78vw!important;padding:16px!important;animation:menuSlide .28s cubic-bezier(.2,.8,.2,1)}
+.category-menu-items{padding-top:4px}
+.category-menu-items button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:56px;padding:12px 10px;border:0;border-bottom:1px solid #e8e8e8;background:#fff;text-align:left;font-size:15px;color:#25272b;transition:padding .2s,color .2s,background .2s}
+.category-menu-items button:active{padding-left:16px;color:#e87532;background:#fff8f3}
+.mobile-search-panel{z-index:135!important;top:90px!important}
+.mobile-search-panel input{font-size:16px!important}
+.mobile-bottom-nav{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:140!important;height:78px!important;padding:7px max(8px,calc((100vw - 900px)/2))!important;background:#fff!important;border-top:1px solid #e5e5e5!important;box-shadow:0 -5px 20px #00000012!important}
+.mobile-bottom-nav a{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;min-width:0!important;color:#62666c!important;text-decoration:none!important;transition:color .2s,transform .2s!important}
+.mobile-bottom-nav a svg{width:24px!important;height:24px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.9!important;stroke-linecap:round!important;stroke-linejoin:round!important;transition:transform .22s ease!important}
+.mobile-bottom-nav a small{font-size:11px!important;color:inherit!important;white-space:nowrap}
+.mobile-bottom-nav a:active{transform:translateY(-4px) scale(1.06)!important;color:#e87532!important}
+.mobile-bottom-nav a.active{color:#e87532!important}
+.mobile-bottom-nav a.active svg{transform:translateY(-2px)!important}
+.mobile-bottom-nav .whatsapp-link{color:#20b866!important}
+.mobile-bottom-nav .whatsapp-icon{width:28px!important;height:28px!important;padding:3px!important;border-radius:50%!important;background:#20b866!important;stroke:#fff!important;stroke-width:1.8!important;animation:whatsappPulse 2.2s ease-in-out infinite}
+@keyframes whatsappPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 #20b86644}50%{transform:scale(1.08);box-shadow:0 0 0 7px #20b86600}}
+.footer-info{background:#202226!important;color:#fff!important}
+.footer-columns h3{color:#fff!important}
+.footer-columns p,.footer-links a{color:#d0d2d5!important}
+.footer-links a:hover,.footer-columns a:hover{color:#ff8b4d!important}
+.footer-social a{background:#e87532!important;color:#fff!important}
+.footer-bottom{background:#08090b!important;color:#fff!important;border-top:1px solid #383a3e}
+.footer-bottom .wrap{color:#fff!important}
+.footer-bottom .wrap::first-letter{color:#ff8b4d}
+.account-content{min-height:calc(100vh - 190px);padding-bottom:110px!important}
+@media(max-width:620px){
+ .category-menu-backdrop{inset:90px 0 calc(72px + env(safe-area-inset-bottom))!important}
+ .category-menu{width:260px!important;max-width:76vw!important;padding:12px!important}
+ .category-menu-items button{min-height:52px;font-size:14px}
+ .mobile-bottom-nav{height:calc(72px + env(safe-area-inset-bottom))!important;padding:6px 5px calc(6px + env(safe-area-inset-bottom))!important}
+ .mobile-bottom-nav a{gap:4px!important}
+ .mobile-bottom-nav a small{font-size:9px!important}
+ .mobile-bottom-nav a svg{width:23px!important;height:23px!important}
+ .mobile-bottom-nav .whatsapp-icon{width:27px!important;height:27px!important}
+ .account-content{padding-bottom:105px!important}
+ body{padding-bottom:calc(78px + env(safe-area-inset-bottom))!important}
+}
+@media(min-width:621px){body{padding-bottom:88px!important}.category-menu-backdrop{inset:104px 0 78px!important}}
