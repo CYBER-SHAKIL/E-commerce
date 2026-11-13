@@ -6,7 +6,7 @@ import {createClient} from "@/lib/supabase/client";
 export default function StoreChrome({cartCount=0,onCart}:{cartCount?:number;onCart?:()=>void}){
  const [open,setOpen]=useState(false),[search,setSearch]=useState(false),[term,setTerm]=useState(""),[cats,setCats]=useState<any[]>([]);
  const path=usePathname(),router=useRouter();
- useEffect(()=>{createClient().from("categories").select("id,name,slug").eq("is_active",true).order("sort_order").then(({data})=>setCats((data||[]).filter(c=>["gadgets","fashion"].includes(String(c.slug||c.name).toLowerCase().replace(/\s+/g,"-")))))},[]);
+ useEffect(()=>{createClient().from("categories").select("id,name,slug").eq("is_active",true).order("sort_order").then(({data})=>setCats((data||[]).filter(c=>["gadgets","fashion","accessories"].includes(String(c.slug||c.name).toLowerCase().replace(/\s+/g,"-")))))},[]);
  const go=(href:string)=>{setOpen(false);router.push(href)};
  return <>
  <div className="topline">WELCOME TO <b>SHAKIL STORE</b> · সারা বাংলাদেশে হোম ডেলিভারি</div>
@@ -15,7 +15,7 @@ export default function StoreChrome({cartCount=0,onCart}:{cartCount?:number;onCa
  <Link className="logo" href="/">SHAKIL <span>STORE</span></Link>
  <nav className="navlinks"><a href="/#shop">Shop</a><Link href="/tracking">Track Order</Link></nav>
  <div className="search"><form onSubmit={e=>{e.preventDefault();go("/?q="+encodeURIComponent(term)+"#shop")}}><input aria-label="Search products" placeholder="Search products..." value={term} onChange={e=>setTerm(e.target.value)}/></form></div>
- <Link className="headbtn" href="/auth">Sign in</Link><button className="primary" onClick={()=>onCart?onCart():go("/?openCart=1")}>Cart ({cartCount})</button>
+ <Link className="headbtn account-headbtn" href="/account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4.1 3.1-6.3 7.5-6.3s7 2.2 7.5 6.3"/></svg>Account</Link><button className="primary cart-headbtn" onClick={()=>onCart?onCart():go("/?openCart=1")}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.5L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>Cart ({cartCount})</button>
  <div className="mobile-head-actions"><button aria-label="Search products" onClick={()=>setSearch(v=>!v)}><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg></button><button aria-label="Open cart" onClick={()=>onCart?onCart():go("/?openCart=1")}><svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.5L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg><i>{cartCount}</i></button></div>
  </div></header>
  {search&&<div className="mobile-search-panel"><form onSubmit={e=>{e.preventDefault();setSearch(false);go("/?q="+encodeURIComponent(term)+"#shop")}}><input autoFocus type="search" placeholder="Search products..." value={term} onChange={e=>setTerm(e.target.value)}/><button type="submit">Search</button><button type="button" aria-label="Close search" onClick={()=>setSearch(false)}>×</button></form></div>}
