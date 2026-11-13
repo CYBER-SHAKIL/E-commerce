@@ -4,8 +4,9 @@ import Link from "next/link";
 import {usePathname,useRouter} from "next/navigation";
 import {createClient} from "@/lib/supabase/client";
 export default function StoreChrome({cartCount=0,onCart}:{cartCount?:number;onCart?:()=>void}){
- const [open,setOpen]=useState(false),[search,setSearch]=useState(false),[term,setTerm]=useState(""),[cats,setCats]=useState<any[]>([]);
+ const [open,setOpen]=useState(false),[search,setSearch]=useState(false),[term,setTerm]=useState(""),[cats,setCats]=useState<any[]>([]),[activeNav,setActiveNav]=useState("home");
  const path=usePathname(),router=useRouter();
+ useEffect(()=>{if(path==="/account"||path==="/auth")setActiveNav("account");else if(path==="/")setActiveNav(window.location.hash==="#offers"?"offers":"home");else setActiveNav("");},[path]);
  useEffect(()=>{createClient().from("categories").select("id,name,slug").eq("is_active",true).order("sort_order").then(({data})=>setCats((data||[]).filter(c=>["gadgets","fashion","accessories"].includes(String(c.slug||c.name).toLowerCase().replace(/\s+/g,"-")))))},[]);
  const go=(href:string)=>{setOpen(false);router.push(href)};
  return <>
@@ -21,10 +22,10 @@ export default function StoreChrome({cartCount=0,onCart}:{cartCount?:number;onCa
  {search&&<div className="mobile-search-panel"><form onSubmit={e=>{e.preventDefault();setSearch(false);go("/?q="+encodeURIComponent(term)+"#shop")}}><input autoFocus type="search" placeholder="Search products..." value={term} onChange={e=>setTerm(e.target.value)}/><button type="submit">Search</button><button type="button" aria-label="Close search" onClick={()=>setSearch(false)}>×</button></form></div>}
  {open&&<><div className="category-menu-backdrop" onClick={()=>setOpen(false)}></div><aside className="category-menu"><div className="category-menu-items"><button className="category-menu-item" onClick={()=>go("/#shop")}>All Products <span>›</span></button>{cats.map(c=><button className="category-menu-item" key={c.id} onClick={()=>go("/?category="+encodeURIComponent(c.slug||c.id)+"#shop")}>{c.name}<span>›</span></button>)}</div></aside></>}
  <nav className="mobile-bottom-nav" aria-label="Store navigation">
- <Link className={path==="/"?"active":""} href="/"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v11h-6v-7H9v7H3Z"/></svg><small>HOME</small></Link>
- <a href="tel:+8801602892579"><svg viewBox="0 0 24 24"><path d="M6.6 2.8 9.4 2l2 4.8-2.1 1.5a15 15 0 0 0 6.4 6.4l1.5-2.1 4.8 2-.8 2.8a3 3 0 0 1-3.3 2.2A17.8 17.8 0 0 1 4.4 6.1a3 3 0 0 1 2.2-3.3Z"/></svg><small>01602892579</small></a>
- <Link className={path==="/#offers"?"active":""} href="/#offers"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 10-13h-7l1-7Z"/></svg><small>OFFERS</small></Link>
- <a className="whatsapp-link" href="https://wa.me/8801602892579" target="_blank" rel="noreferrer"><svg className="whatsapp-icon" viewBox="0 0 32 32"><circle cx="16" cy="15" r="12"/><path d="M7 26l2-5"/><path d="M12 10c1-1 2 2 2 3l-1 1c1 2 2 3 4 4l1-1c1-1 3 1 3 2-1 3-4 3-7 1-4-2-7-6-6-9z"/></svg><small>WHATSAPP</small></a>
- <Link className={path==="/account"||path==="/auth"?"active":""} href="/account"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.2 3.2-7 8-7s8 2.8 8 7"/></svg><small>ACCOUNT</small></Link>
+ <Link onClick={()=>setActiveNav("home")} className={activeNav==="home"&&path==="/"?"active":""} href="/"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v11h-6v-7H9v7H3Z"/></svg><small>HOME</small></Link>
+ <a onClick={()=>setActiveNav("phone")} className={activeNav==="phone"?"active":""} href="tel:+8801602892579"><svg viewBox="0 0 24 24"><path d="M6.6 2.8 9.4 2l2 4.8-2.1 1.5a15 15 0 0 0 6.4 6.4l1.5-2.1 4.8 2-.8 2.8a3 3 0 0 1-3.3 2.2A17.8 17.8 0 0 1 4.4 6.1a3 3 0 0 1 2.2-3.3Z"/></svg><small>01602892579</small></a>
+ <Link onClick={()=>setActiveNav("offers")} className={activeNav==="offers"?"active":""} href="/#offers"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 10-13h-7l1-7Z"/></svg><small>OFFERS</small></Link>
+ <a onClick={()=>setActiveNav("whatsapp")} className={"whatsapp-link "+(activeNav==="whatsapp"?"active":"")} href="https://wa.me/8801602892579" target="_blank" rel="noreferrer"><svg className="whatsapp-icon" viewBox="0 0 32 32"><circle cx="16" cy="15" r="12"/><path d="M7 26l2-5"/><path d="M12 10c1-1 2 2 2 3l-1 1c1 2 2 3 4 4l1-1c1-1 3 1 3 2-1 3-4 3-7 1-4-2-7-6-6-9z"/></svg><small>WHATSAPP</small></a>
+ <Link onClick={()=>setActiveNav("account")} className={activeNav==="account"||path==="/account"||path==="/auth"?"active":""} href="/account"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.2 3.2-7 8-7s8 2.8 8 7"/></svg><small>ACCOUNT</small></Link>
  </nav></>;
 }
