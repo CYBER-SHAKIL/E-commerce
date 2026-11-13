@@ -315,3 +315,8 @@ body{padding-bottom:82px}
  .headrow{gap:12px}
  .account-headbtn,.cart-headbtn{font-size:11px}
 }
+
+.footer-columns-reference{grid-template-columns:1.2fr 1fr 1fr 1fr!important;gap:34px!important}
+.footer-links-one{grid-template-columns:1fr!important;gap:10px!important}
+@media(max-width:850px){.footer-columns-reference{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:28px!important}}
+@media(max-width:620px){.footer-columns-reference{grid-template-columns:1fr!important;gap:22px!important}.mobile-head-actions{gap:11px!important}.mobile-head-actions a{display:grid;place-items:center}.mobile-head-actions a svg{width:22px;height:22px}}
