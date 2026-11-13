@@ -1,5 +1,41 @@
 "use client";
-import {useState} from "react";import Link from "next/link";import {createClient} from "@/lib/supabase/client";
-export default function Auth(){const sb=createClient(),[mode,setMode]=useState("email"),[kind,setKind]=useState("signin"),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[phone,setPhone]=useState(""),[otp,setOtp]=useState(""),[name,setName]=useState(""),[msg,setMsg]=useState(""),[busy,setBusy]=useState(false);
-async function submit(){setBusy(true);setMsg("");let error:any=null;if(mode==="email"){if(kind==="signup"){const r=await sb.auth.signUp({email,password,options:{data:{full_name:name},emailRedirectTo:location.origin+"/account"}});error=r.error; if(!error)setMsg("ইমেইল যাচাই করার জন্য আপনার inbox দেখুন।")}else{const r=await sb.auth.signInWithPassword({email,password});error=r.error;if(!error)location.href="/account"}}else{if(!otp){const r=await sb.auth.signInWithOtp({phone,options:{shouldCreateUser:true,data:{full_name:name}}});error=r.error;if(!error)setMsg("SMS OTP পাঠানো হয়েছে।")}else{const r=await sb.auth.verifyOtp({phone,token:otp,type:"sms"});error=r.error;if(!error)location.href="/account"}}setBusy(false);if(error)setMsg(error.message)}
-return <main className="wrap" style={{maxWidth:520,paddingTop:45}}><Link className="logo" href="/">SHAKIL <span>STORE</span></Link><div className="panel" style={{marginTop:22}}><h1>{kind==="signup"?"Create your account":"Welcome back"}</h1><p className="muted">Order করতে customer account আবশ্যক।</p><div className="row"><button className="smallbtn" onClick={()=>setMode("email")}>Email & Password</button><button className="smallbtn" onClick={()=>setMode("phone")}>Phone OTP</button></div><div className="row" style={{margin:"12px 0"}}><button className="smallbtn" onClick={()=>setKind("signin")}>Sign in</button><button className="smallbtn" onClick={()=>setKind("signup")}>Create account</button></div>{kind==="signup"&&<label className="field">Full name<input value={name} onChange={e=>setName(e.target.value)} required/></label>}{mode==="email"?<><label className="field">Email<input type="email" value={email} onChange={e=>setEmail(e.target.value)} required/></label><label className="field">Password<input type="password" minLength={8} value={password} onChange={e=>setPassword(e.target.value)} required/></label></>:<><label className="field">Phone number (include country code)<input placeholder="+8801XXXXXXXXX" value={phone} onChange={e=>setPhone(e.target.value)}/></label>{msg.includes("OTP")&&<label className="field">SMS OTP<input value={otp} onChange={e=>setOtp(e.target.value)} /></label>}<p className="muted">Phone login-এর জন্য Supabase Auth-এ SMS provider configure করতে হবে।</p></>}<button className="primary" style={{width:"100%",marginTop:14}} disabled={busy} onClick={submit}>{busy?"Please wait...":mode==="phone"&&!otp?"Send OTP":kind==="signup"?"Create account":"Sign in"}</button>{msg&&<p className="muted">{msg}</p>}<p className="muted">By continuing, you agree to our store terms and privacy policy.</p></div></main>}
+import {useState} from "react";
+import Link from "next/link";
+import {createClient} from "@/lib/supabase/client";
+export default function Auth(){
+ const sb=createClient();
+ const [kind,setKind]=useState<"signin"|"signup">("signin");
+ const [identity,setIdentity]=useState(""),[email,setEmail]=useState(""),[phone,setPhone]=useState(""),[name,setName]=useState(""),[address,setAddress]=useState(""),[password,setPassword]=useState(""),[confirm,setConfirm]=useState(""),[remember,setRemember]=useState(true),[msg,setMsg]=useState(""),[busy,setBusy]=useState(false);
+ async function submit(e:React.FormEvent){e.preventDefault();setMsg("");if(password.length<6){setMsg("পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।");return}if(kind==="signup"&&password!==confirm){setMsg("দুইটি পাসওয়ার্ড মিলছে না।");return}setBusy(true);
+ let error:any=null;
+ if(kind==="signup"){
+   const isEmail=email.trim().length>0;
+   const payload:any={password,options:{data:{full_name:name,phone:phone,address}}};
+   if(isEmail){payload.email=email.trim();payload.options.emailRedirectTo=location.origin+"/account"}else payload.phone=phone.trim();
+   const r=await sb.auth.signUp(payload);error=r.error;if(!error)setMsg(isEmail?"রেজিস্ট্রেশন হয়েছে। ইমেইল যাচাই করে লগইন করুন।":"রেজিস্ট্রেশন অনুরোধ গ্রহণ করা হয়েছে। Phone OTP provider configure না থাকলে ফোন signup সম্পন্ন হবে না।");
+ }else{
+   const value=identity.trim();const isEmail=value.includes("@");
+   const r=await sb.auth.signInWithPassword(isEmail?{email:value,password}:{phone:value,password});error=r.error;if(!error)location.href="/account";
+ }
+ setBusy(false);if(error)setMsg(error.message);
+ }
+ async function forgot(){const value=identity.trim();if(!value.includes("@")){setMsg("Password reset-এর জন্য account email লিখুন।");return}const {error}=await sb.auth.resetPasswordForEmail(value,{redirectTo:location.origin+"/auth"});setMsg(error?error.message:"Password reset link ইমেইলে পাঠানো হয়েছে।")}
+ return <main className="auth-page"><div className="auth-crumb"><Link href="/">⌂</Link><span>/</span>{kind==="signin"?"Login":"Register"}</div><section className="auth-card"><h1>{kind==="signin"?"Account Login":"Register Account"}</h1>
+ {kind==="signin"?<form onSubmit={submit}>
+ <label className="auth-label">Email / Phone (আপনার ফোন নম্বর / ইমেইল)<input required value={identity} onChange={e=>setIdentity(e.target.value)} placeholder="Email / Phone" autoComplete="username"/></label>
+ <div className="auth-label-row"><label>Password (পাসওয়ার্ড)<span className="auth-link" onClick={forgot}>Forgotten Password?</span></label></div><input className="auth-input" required type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password" autoComplete="current-password"/>
+ <label className="auth-check"><input type="checkbox" checked={remember} onChange={e=>setRemember(e.target.checked)}/> Remember me</label>
+ <button className="auth-submit" disabled={busy}>{busy?"Please wait...":"Login"}</button>
+ <div className="auth-divider">Don't have an account?</div><button type="button" className="auth-outline" onClick={()=>{setKind("signup");setMsg("")}}>Create Your Account</button>
+ </form>:<form onSubmit={submit}>
+ <label className="auth-label">Name (আপনার নাম) *<input required value={name} onChange={e=>setName(e.target.value)} placeholder="Name" autoComplete="name"/></label>
+ <label className="auth-label">Email (আপনার ইমেইল)<input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" autoComplete="email"/></label>
+ <label className="auth-label">Phone (আপনার ফোন নম্বর) *<input required value={phone} onChange={e=>setPhone(e.target.value)} placeholder="+8801XXXXXXXXX" autoComplete="tel"/></label>
+ <label className="auth-label">Address (আপনার ঠিকানা) *<textarea required value={address} onChange={e=>setAddress(e.target.value)} placeholder="Address"/></label>
+ <label className="auth-label">Password (পাসওয়ার্ড) *<input required minLength={6} type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Min 6 characters" autoComplete="new-password"/></label>
+ <label className="auth-label">Confirm Password (কনফার্ম পাসওয়ার্ড) *<input required type="password" value={confirm} onChange={e=>setConfirm(e.target.value)} placeholder="Confirm Password" autoComplete="new-password"/></label>
+ <button className="auth-submit" disabled={busy}>{busy?"Please wait...":"Register"}</button><div className="auth-divider">Already have an account?</div><button type="button" className="auth-outline" onClick={()=>{setKind("signin");setMsg("")}}>Login</button>
+ </form>}
+ {msg&&<p className="auth-message" role="status">{msg}</p>}
+ </section></main>
+}
