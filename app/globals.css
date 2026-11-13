@@ -249,3 +249,69 @@ body{padding-bottom:82px}
  body{padding-bottom:calc(78px + env(safe-area-inset-bottom))!important}
 }
 @media(min-width:621px){body{padding-bottom:88px!important}.category-menu-backdrop{inset:104px 0 78px!important}}
+
+/* Homepage reference redesign */
+.hero{min-height:310px!important;grid-template-columns:1fr 1fr!important;margin:24px auto 30px!important;background:#f0f0ed!important;border-radius:16px!important}
+.hero-copy{padding:42px!important}
+.hero h1{font-size:clamp(36px,4.8vw,58px)!important;line-height:1.03!important;letter-spacing:-2.8px!important}
+.hero-img{overflow:hidden!important;background:linear-gradient(120deg,#f4f4f1,#e8e9e9)!important}
+.hero-img img{width:100%;height:100%;min-height:310px;object-fit:cover;display:block}
+.category-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.category-card{min-width:0;border:1px solid var(--line);border-radius:13px;background:#fff;padding:9px;display:flex;flex-direction:column;align-items:center;gap:8px;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
+.category-card:hover,.category-card.selected{border-color:#e87532;box-shadow:0 8px 24px #17191d0c;transform:translateY(-2px)}
+.category-card img{width:100%;height:132px;object-fit:cover;border-radius:8px;background:#f1f2f3}
+.category-card b{font-size:13px;color:#25272b}
+.category-card small{font-size:10px;color:#8b9097}
+.category-placeholder{width:100%;height:132px;display:grid;place-items:center;background:#f3f3f1;border-radius:8px;font-size:40px;color:#e87532}
+.product-card{border-radius:13px}
+.product-photo-new{height:210px;position:relative;cursor:pointer}
+.product-photo-new img{width:100%;height:100%;object-fit:cover}
+.discount-badge{position:absolute;top:10px;left:10px;background:#e87532;color:#fff;border-radius:4px;padding:5px 8px;font-size:10px;font-weight:900;letter-spacing:.3px}
+.product-card .cardbody{padding:12px}
+.product-category{font-size:9px;letter-spacing:1.1px;text-transform:uppercase;color:#b56b43;font-weight:800;margin-bottom:5px}
+.product-card h3{font-size:13px;line-height:1.45;min-height:36px;margin:0 0 8px}
+.product-prices{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.product-prices .old{margin:0}
+.product-prices .price{font-size:15px}
+.product-card .stock{margin-top:8px;min-height:14px}
+.product-buttons{display:grid;grid-template-columns:.9fr 1.2fr;gap:7px;margin-top:11px}
+.details-button,.add-button{height:36px;border-radius:7px;font-size:11px;font-weight:800;transition:background .2s,border-color .2s}
+.details-button{border:1px solid #dfe1e4;background:#fff;color:#272a2f}
+.details-button:hover{border-color:#e87532;color:#e87532}
+.add-button{border:1px solid #202226;background:#202226;color:#fff}
+.add-button:hover{background:#3a3d42}
+.add-button:disabled{opacity:.45;cursor:not-allowed}
+.account-headbtn,.cart-headbtn{display:flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
+.account-headbtn svg,.cart-headbtn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.cart-headbtn{padding:10px 13px!important}
+@media(max-width:850px){
+ .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .product-photo-new{height:180px}
+ .category-card img,.category-placeholder{height:112px}
+}
+@media(max-width:620px){
+ .hero{grid-template-columns:1fr!important;min-height:0!important;margin:14px auto 24px!important}
+ .hero-copy{padding:26px 24px!important}
+ .hero h1{font-size:42px!important;letter-spacing:-2px!important}
+ .hero-img{min-height:170px!important;max-height:190px}
+ .hero-img img{min-height:170px;max-height:190px}
+ .category-cards{gap:9px}
+ .category-card{padding:6px;gap:6px}
+ .category-card img,.category-placeholder{height:86px}
+ .category-card b{font-size:11px}
+ .category-card small{font-size:9px;text-align:center}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ .product-photo-new{height:145px}
+ .product-card .cardbody{padding:9px}
+ .product-card h3{font-size:11px;min-height:32px}
+ .product-prices .price{font-size:13px}
+ .product-prices .old{font-size:10px}
+ .product-buttons{grid-template-columns:1fr;gap:6px;margin-top:9px}
+ .details-button,.add-button{height:34px;font-size:10px}
+ .account-headbtn{padding:8px 9px!important;font-size:11px!important}
+ .cart-headbtn{padding:8px 9px!important;font-size:11px!important}
+}
+@media(min-width:621px) and (max-width:900px){
+ .headrow{gap:12px}
+ .account-headbtn,.cart-headbtn{font-size:11px}
+}
