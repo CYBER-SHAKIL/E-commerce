@@ -8,7 +8,8 @@ export default function StoreChrome({cartCount=0,onCart}:{cartCount?:number;onCa
  const path=usePathname(),router=useRouter();
  useEffect(()=>{if(path==="/account"||path==="/auth")setActiveNav("account");else if(path==="/")setActiveNav(window.location.hash==="#shop"||window.location.hash==="#offers"?"offers":"home");else setActiveNav("");},[path]);
  useEffect(()=>{createClient().from("categories").select("id,name,slug").eq("is_active",true).order("sort_order").then(({data})=>{setCats((data||[]).filter(c=>{const slug=String(c.slug||c.name).toLowerCase().replace(/&/g,"-").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");return ["electronics","electronic","gadgets","gadget","fashion","clothing","apparel","accessories","lifestyle","home-living","home-and-living","everyday-essentials"].includes(slug)}).filter((c,i,arr)=>{const label=(s:string)=>["electronics","electronic","gadgets","gadget"].includes(s)?"gadgets":["fashion","clothing","apparel"].includes(s)?"fashion":"lifestyle";const slug=String(c.slug||c.name).toLowerCase().replace(/&/g,"-").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");return arr.findIndex(x=>label(String(x.slug||x.name).toLowerCase().replace(/&/g,"-").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""))===label(slug))===i}))})},[]);
- const go=(href:string)=>{setOpen(false);router.push(href)};\n const chooseCategory=(key:string,href:string)=>{setActiveCategory(key);setOpen(false);router.push(href)};
+ const go=(href:string)=>{setOpen(false);router.push(href)};
+ const chooseCategory=(key:string,href:string)=>{setActiveCategory(key);setOpen(false);router.push(href)};
  return <>
  <div className="topline">WELCOME TO <b>SHAKIL STORE</b> · Smart Shopping, সারা বাংলাদেশে হোম ডেলিভারি</div>
  <header className="header"><div className="wrap headrow">
