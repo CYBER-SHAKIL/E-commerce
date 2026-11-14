@@ -7,7 +7,7 @@ export default function StoreChrome({cartCount=0,onCart}:{cartCount?:number;onCa
  const [open,setOpen]=useState(false),[search,setSearch]=useState(false),[term,setTerm]=useState(""),[cats,setCats]=useState<any[]>([]),[activeNav,setActiveNav]=useState("home");
  const path=usePathname(),router=useRouter();
  useEffect(()=>{if(path==="/account"||path==="/auth")setActiveNav("account");else if(path==="/")setActiveNav(window.location.hash==="#offers"?"offers":"home");else setActiveNav("");},[path]);
- useEffect(()=>{createClient().from("categories").select("id,name,slug").eq("is_active",true).order("sort_order").then(({data})=>setCats((data||[]).filter(c=>!["home-living","home-and-living","beauty","new-arrivals"].includes(String(c.slug||c.name).toLowerCase().replace(/&/g,"-").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""))))))},[]);
+ useEffect(()=>{createClient().from("categories").select("id,name,slug").eq("is_active",true).order("sort_order").then(({data})=>{setCats((data||[]).filter(c=>{const slug=String(c.slug||c.name).toLowerCase().replace(/&/g,"-").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");return !["home-living","home-and-living","beauty","new-arrivals"].includes(slug)}))})},[]);
  const go=(href:string)=>{setOpen(false);router.push(href)};
  return <>
  <div className="topline">WELCOME TO <b>SHAKIL STORE</b> · Smart Shopping, সারা বাংলাদেশে হোম ডেলিভারি</div>
