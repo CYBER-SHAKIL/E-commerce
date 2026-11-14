@@ -812,3 +812,57 @@ body{color:#17191d!important}
 .category-menu-items .category-menu-item{cursor:pointer!important;pointer-events:auto!important;color:#17191d!important}
 .add-button{background:#202226!important;border-color:#202226!important;color:#fff!important}
 @media(max-width:620px){.category-menu-backdrop{top:90px!important;bottom:calc(72px + env(safe-area-inset-bottom))!important}.category-menu{max-width:86vw!important}}
+
+/* SHAKIL STORE orange accent palette — remove green accents everywhere */
+:root{--brand:#f07832!important;--ink:#17191d!important;--muted:#737983!important}
+body{color:#17191d!important;background:#fff!important}
+.logo{color:#fff!important}
+.logo span{color:#f07832!important}
+.footer-brand h3 span{color:#fff!important}
+.footer-brand h3 em{color:#f07832!important;font-style:normal!important}
+.topline b{color:#f07832!important}
+.eyebrow,.hero-slider .hero-eyebrow,.collection-kicker,.product-category{color:#f07832!important}
+.hero-slider .hero-copy h1 span{color:#f07832!important}
+.hero-slider .hero-copy .primary,.primary{background:#f07832!important;border-color:#f07832!important;color:#fff!important}
+.hero-slider .hero-copy .primary:hover,.primary:hover{background:#df6825!important;border-color:#df6825!important}
+.hero-dots button.active{background:#f07832!important}
+.cat.active,.cat:hover,.collection-filters button.active,.collection-filters button:hover{border-color:#f07832!important;color:#f07832!important;background:#fff4ed!important}
+.collection-filters button,.cat{color:#17191d}
+.product-category,.product-card .product-category{color:#f07832!important}
+.discount-badge,.pill,.product-detail-discount{background:#fff0e6!important;color:#e56c27!important}
+.details-button{background:#fff!important;border:1px solid #dfe1e4!important;color:#17191d!important}
+.add-button,.product-detail-add{background:#17191d!important;border-color:#17191d!important;color:#fff!important}
+.add-button:hover,.product-detail-add:hover{background:#303238!important;border-color:#303238!important}
+.stock,.success,.success-icon{color:#17191d!important}
+.success-icon{background:#f07832!important;color:#fff!important}
+.success-card{border-top-color:#f07832!important}
+.order-number{background:#fff0e6!important;color:#e56c27!important}
+.notice{background:#fff4ed!important;color:#9a4c1d!important}
+.error{color:#b42318!important}
+.rating,.stars button{color:#f07832!important}
+.auth-link{color:#e56c27!important}
+.auth-label input:focus,.auth-label textarea:focus,.auth-input:focus,.password-wrap>input:focus{border-color:#f07832!important}
+.auth-check input{accent-color:#f07832!important}
+.auth-submit{background:#f07832!important;border-color:#f07832!important;color:#fff!important}
+.auth-outline{border-color:#f07832!important;color:#e56c27!important}
+.category-menu-items .category-menu-item:first-child,.category-menu-items .category-menu-item:active{color:#e56c27!important}
+.category-menu-items .category-menu-item:active{background:#fff4ed!important}
+.mobile-bottom-nav a,.mobile-bottom-nav a:first-child,.mobile-bottom-nav a:nth-child(3),.mobile-bottom-nav a:nth-child(4),.mobile-bottom-nav a:last-child{color:#555!important}
+.mobile-bottom-nav a.active,.mobile-bottom-nav a[aria-current="page"]{color:#f07832!important}
+.mobile-bottom-nav a small{color:inherit!important}
+.mobile-bottom-nav a:nth-child(4) .whatsapp-icon,.whatsapp-icon{background:#f07832!important;color:#fff!important}
+.whatsapp-icon svg{stroke:#fff!important;fill:none!important}
+.footer-info,.footer{background:#17191d!important;color:#fff!important}
+.footer-info h3,.footer h3{color:#fff!important}
+.footer-info a:hover,.footer a:hover{color:#f07832!important}
+.footer-social a{background:#f07832!important;color:#fff!important}
+.footer-bottom{background:#101114!important;border-top:1px solid #34373d!important;color:#f07832!important}
+.footer-bottom *{color:#f07832!important}
+.product-detail-price strong{color:#f07832!important}
+.product-detail-thumbs button.active{border-color:#f07832!important}
+.product-option button.active{border-color:#f07832!important;background:#fff4ed!important;color:#e56c27!important}
+.product-detail-buy{background:#f07832!important;border-color:#f07832!important;color:#fff!important}
+.product-detail-panel h3,.product-detail-panel h2{color:#17191d!important}
+.category-menu-kicker,.cellbun-menu-kicker,.cellbun-menu-label{color:#f07832!important}
+.cellbun-menu-head{background:#17191d!important}
+button:focus-visible,a:focus-visible{outline:2px solid #f07832!important;outline-offset:2px!important}
