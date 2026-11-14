@@ -867,7 +867,10 @@ body{color:#17191d!important;background:#fff!important}
 .cellbun-menu-head{background:#17191d!important}
 button:focus-visible,a:focus-visible{outline:2px solid #f07832!important;outline-offset:2px!important}
 
-/* Stock and discount label refinements */
-.product-detail-info .stock-in{color:#27834a!important}
-.product-detail-info .stock-out{color:#17191d!important}
-.product-detail-discount,.discount-badge{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important;color:#f07832!important}
+
+/* Clear stock emphasis across product cards and product details */
+.product-card .stock-in,.product-detail-info .stock-in{color:#27834a!important;font-weight:800!important}
+.product-card .stock-out,.product-detail-info .stock-out{display:inline-block!important;color:#17191d!important;font-weight:800!important}
+.product-card .stock-out{font-size:14px!important;border:1px solid #17191d!important;padding:5px 9px!important;border-radius:4px!important;min-height:0!important}
+.product-detail-info .stock-out{font-size:16px!important;border:1px solid #17191d!important;padding:7px 11px!important;border-radius:4px!important}
+.product-card .discount-badge,.product-detail-discount{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important;color:#f07832!important;font-weight:800!important}
