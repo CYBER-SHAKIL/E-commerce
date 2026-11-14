@@ -866,3 +866,9 @@ body{color:#17191d!important;background:#fff!important}
 .category-menu-kicker,.cellbun-menu-kicker,.cellbun-menu-label{color:#f07832!important}
 .cellbun-menu-head{background:#17191d!important}
 button:focus-visible,a:focus-visible{outline:2px solid #f07832!important;outline-offset:2px!important}
+
+
+/* Product detail visual refinements */
+.product-detail-price strong{color:#17191d!important}
+.product-prices .price,.price{color:#17191d!important}
+.stock{color:#27834a!important}
