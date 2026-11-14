@@ -867,8 +867,7 @@ body{color:#17191d!important;background:#fff!important}
 .cellbun-menu-head{background:#17191d!important}
 button:focus-visible,a:focus-visible{outline:2px solid #f07832!important;outline-offset:2px!important}
 
-
-/* Product detail visual refinements */
-.product-detail-price strong{color:#17191d!important}
-.product-prices .price,.price{color:#17191d!important}
-.stock{color:#27834a!important}
+/* Stock and discount label refinements */
+.product-detail-info .stock-in{color:#27834a!important}
+.product-detail-info .stock-out{color:#17191d!important}
+.product-detail-discount,.discount-badge{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important;color:#f07832!important}
