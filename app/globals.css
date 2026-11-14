@@ -874,3 +874,20 @@ button:focus-visible,a:focus-visible{outline:2px solid #f07832!important;outline
 .product-card .stock-out{font-size:14px!important;border:1px solid #17191d!important;padding:5px 9px!important;border-radius:4px!important;min-height:0!important}
 .product-detail-info .stock-out{font-size:16px!important;border:1px solid #17191d!important;padding:7px 11px!important;border-radius:4px!important}
 .product-card .discount-badge,.product-detail-discount{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important;color:#f07832!important;font-weight:800!important}
+
+/* Requested premium storefront refinements */
+.product-prices .price,.product-detail-price strong,.price,.offer-price{color:#17191d!important}
+.hero-slider .hero-copy .primary,.hero-slider .hero-copy a.primary{background:#17191d!important;border-color:#17191d!important;color:#fff!important}
+.hero-slider .hero-copy .primary:hover,.hero-slider .hero-copy a.primary:hover{background:#303238!important;border-color:#303238!important}
+.product-card .discount-badge{background:#f07832!important;color:#fff!important;border:1px solid #f07832!important;border-radius:4px!important;padding:5px 8px!important;box-shadow:none!important}
+.product-card .stock-in{color:#27834a!important;font-weight:800!important}
+.product-card .stock-out{background:#17191d!important;color:#fff!important;border:1px solid #17191d!important;font-weight:800!important}
+.product-detail-info .stock-in{color:#27834a!important;font-weight:800!important}
+.product-detail-info .stock-out{background:#17191d!important;color:#fff!important;border:1px solid #17191d!important;font-weight:800!important}
+.product-detail-discount{background:#f07832!important;color:#fff!important;border:1px solid #f07832!important;padding:5px 8px!important;border-radius:4px!important;font-weight:800!important}
+.product-card{cursor:pointer;transition:transform .24s ease,box-shadow .24s ease}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(23,25,29,.10)}
+.product-page-enter .product-detail-animated{animation:productDetailReveal .48s cubic-bezier(.2,.75,.25,1) both}
+@keyframes productDetailReveal{from{opacity:0;transform:translateY(18px) scale(.99);filter:blur(3px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.product-information{animation:productDetailReveal .55s .06s ease both}
+@media(prefers-reduced-motion:reduce){.product-card,.product-page-enter .product-detail-animated,.product-information{animation:none!important;transition:none!important}}
